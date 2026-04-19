@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  fraud-detection:
+    build: .
+    container_name: fraud-detection
+    ports:
+      - "8501:8501"   # Streamlit dashboard  ->  http://localhost:8501
+      - "8000:8000"   # FastAPI REST API     ->  http://localhost:8000/docs
+    environment:
+      # New Kaggle token format (recommended):
+      #   export KAGGLE_API_TOKEN=KGAT_your_token_here
+      #   docker compose up --build
+      - KAGGLE_API_TOKEN=${KAGGLE_API_TOKEN}
+      # Legacy format also supported:
+      - KAGGLE_USERNAME=${KAGGLE_USERNAME:-}
+      - KAGGLE_KEY=${KAGGLE_KEY:-}
+      - PYTHONUNBUFFERED=1
+    volumes:
+      # Persist downloaded dataset (avoids re-downloading on restart)
+      - ./data:/app/data
+      # Persist trained models between restarts
+      - ./models:/app/models
+      # Persist output charts
+      - ./outputs:/app/outputs
+    restart: unless-stopped
