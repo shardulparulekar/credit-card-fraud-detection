@@ -57,7 +57,7 @@ export KAGGLE_API_TOKEN=KGAT_your_token_here
 ### Step 3 — Run (single command)
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/fraud-detection.git
+git clone https://github.com/shardulparulekar/fraud-detection.git
 cd fraud-detection
 docker compose up --build
 ```
